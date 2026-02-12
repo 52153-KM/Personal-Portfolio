@@ -16,7 +16,7 @@ const projectItems = [
     },
 ];
 
-projectDiv = document.getElementById("projects");
+const projectDiv = document.getElementById("projects");
 
 projectItems.forEach((projectItems) => {
     const projectTitle = projectItems.Title;

@@ -37,5 +37,5 @@ projectItems.forEach((projectItems) => {
 
     titleDiv.appendChild(urlDiv);
     urlDiv.appendChild(textDiv);
-    textDiv.appendChild(titleDiv);
+    projectDiv.appendChild(titleDiv);
 });

@@ -16,7 +16,7 @@ const projectItems = [
 	},
 ];
 
-projectDiv = document.getElementById("projects");
+const projectDiv = document.getElementById("projects");
 
 projectItems.forEach((projectItems) => {
 	const projectTitle = projectItems.Title;
@@ -37,5 +37,5 @@ projectItems.forEach((projectItems) => {
 
 	titleDiv.appendChild(urlDiv);
 	urlDiv.appendChild(textDiv);
-	textDiv.appendChild(titleDiv);
+	projectDiv.appendChild(titleDiv);
 });

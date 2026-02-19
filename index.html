@@ -3,40 +3,92 @@
 
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width-device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link 
+            href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Oswald:wght@200..700&display=swap" 
+            rel="stylesheet" />
+        <link rel="stylesheet" href="styles.css" />
         <title>Kavin Muller's Portfolio</title>
+        <script src="index.js" defer></script>
     </head>
 
     <body>
         <header>
-            <b>Kavin Muller's Portfolio</b>
+            <div class="profile-banner">
+                <div id="name-and-face">
+                    <img id="headshot" src="images/KM Photo.jpg" alt="selfie" width="150px" height="150px" />
+                    <h1><b>Kavin Muller's Portfolio</b><h1>
+                </div>
+                <div id="social-links">
+                    <ul>
+                        <li><a href="https://github.com/52153-KM" target="_blank">GitHub</a></li>
+                        <li><a href="https://www.linkedin.com/in/kavin-muller-b402371ab" target="_blank">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
         </header>
-        <main>
-            <section id="social-links">
-                <h3>GitHub: </h3>
-                <a href="https://github.com/52153-KM" target="_blank">
-                    <button>Visit GitHub Profile</button>
-                </a>
-                <h3>LinkedIn: </h3>
-                <a href="https://www.linkedin.com/in/kavin-muller-b402371ab" target="_blank">
-                    <button>Visit LinkedIn Profile</button>
-                </a>
-            </section>
 
+        <main>
             <section id="personal-info">
                 <div class="bio">
-                    <img src="images/KM Photo.jpg" alt="Headshot" width="200" height="200" />
+                    <h2>About Me</h2>
                     <p>Kavin Muller is a software developer with experience in web development, database management, and
-                        system design. He is passionate about creating efficient and scalable applications.</p>
-                </div>
-                <div id="projects">
-
+                        system design. He is passionate about creating efficient and scalable applications. 
+                        Born and raised in central Utah. Kavin Muller grew up with a fascination centering around technology. 
+                        Later on in life he discovered his love of software development and has pursued it ever since.</p>
                 </div>
             </section>
-        </main>
-        <footer>
-            <p>copyright 2026</p>
-        </footer>
-    </body>
 
+            <section id="personal-projects">
+                <h3>Personal Projects</h3>
+                <div id="projects"></div>
+            </section>
+
+            <section id="contact">
+                <form method="POST">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="first-name">First Name</label>
+                            <input id="first-name" type="text" placeholder="Enter your first name" required/>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="last-name">Last Name</label>
+                            <input id="last-name" type="text" placeholder="Enter your last name" required/>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="subject">Subject</label>
+                            <select id="subject">
+                                <option value="inquiry" selected>Buissness Inquiry</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="general">General Question</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" placeholder="Enter your email" required/>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="message">Message</label>
+                        <textarea 
+                            id="message" 
+                            name="message" 
+                            placeholder="Enter your message" 
+                            required
+                        ></textarea>
+                    </div>
+                    <button>Contact Me</button>
+                </form>
+            </section>        
+        </main>
+        <footer><p>&#169 2026</p></footer>
+    </body>
     </html>

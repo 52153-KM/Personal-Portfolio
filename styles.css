@@ -3,9 +3,11 @@ body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    background-color: #BDECB6;
 }
 
-h1, 
+h1,
+h2,
 h3 {
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
@@ -13,43 +15,81 @@ h3 {
     font-style: normal;
 }
 
+header {
+    position: relative;
+    top: 0px;
+    display: flex;
+    flex-direction: row;
+	justify-content: center;
+}
+
 .profile-banner {
-    /*width: 100%;
-	max-width: 600px;
-	max-height: 40px;
-	margin: 0 auto;
-	padding: 3rem 2rem;*/
+    position: relative;
+    top: 10px;
+    width: 100%;
+	max-width: 30%;
+	max-height: 50px;
+	margin: 30px;
+	padding: 70px;
     display: flex;
-	justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    .headshot {
-        border: 1px solid #00000011;
-        border-radius: 50%;
-        object-fit: cover;
-    }
+    justify-content: space-evenly;
+    background-color: #f8fa74;
+    border: 10px solid #434B4D;
 }
 
-.social-links ul {
+#name-and-face {
     display: flex;
     align-items: center;
+}
+
+#name-and-face h1 {
+    padding-left: 30px;
+}
+
+#headshot {
+    border: 1px solid #00000011;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#social-links ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 15px;
+    display: flex;
+    padding-inline-start: 0px;
 }
 
-.social-links ul li {
+#social-links ul li {
     margin-right: 1rem;
 }
 
-.social-links ul li a { 
-    color: #00000000;
+#social-links ul li a { 
     font-size: 1.25rem;
     text-decoration: none;
+    color: #000000;
 }
 
-.social-links ul li a:hover {
+#social-links ul li a:hover {
     color: #0000EE;
     text-decoration: underline;
+}
+
+#personal-info {
+    position: relative;
+    display: block;
+    width: auto;
+    height: auto;
+    background-color:  #41b1d6;
+    margin: 30px;
+    border: 10px solid #434B4D;
+    padding: 30px;
+    justify-content: center;
+}
+
+.bio h2 {
+    color: #5c9c43;
+}
+
+.bio p {
+    font-size: large;
+    text-align: justify;
 }

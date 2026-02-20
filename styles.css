@@ -93,3 +93,12 @@ header {
     font-size: large;
     text-align: justify;
 }
+
+#personal-projects {
+    display: flex;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/*Bookmark

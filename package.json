@@ -1,0 +1,23 @@
+{
+	"name": "personal-portfolio",
+	"version": "1.0.0",
+	"description": "",
+	"homepage": "https://github.com/52153-KM/Personal-Portfolio#readme",
+	"bugs": {
+		"url": "https://github.com/52153-KM/Personal-Portfolio/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/52153-KM/Personal-Portfolio.git"
+	},
+	"license": "ISC",
+	"author": "",
+	"type": "commonjs",
+	"main": "index.js",
+	"scripts": {
+		"dev": "vite"
+	},
+	"dependencies": {
+		"vite": "^7.3.1"
+	}
+}

@@ -43,7 +43,7 @@ projectItems.forEach((projectItems) => {
 		titleDiv.classList.toggle("active");
 		textDiv.classList.toggle("active");
 	});
-
+	/*Kinda had to brute force this, since I couldn't figure out how to connect a URL/Button between the HTML, CSS, and JS files. Overall I'd say it worked out, but let me know if I need to change it.*/
 	linkButton.addEventListener("click", () => {
 		if (projectItems.Title === "Dealership Inventory Management System") {
 			window.open(

@@ -11,7 +11,7 @@
             rel="stylesheet" />
         <link rel="stylesheet" href="styles.css" />
         <title>Kavin Muller's Portfolio</title>
-        <script src="index.js" defer></script>
+        <script type="module" src="index.mjs" defer></script>
     </head>
 
     <body>
@@ -48,6 +48,27 @@
             <section id="personal-projects">
                 <h2>Personal Projects</h2>
                 <div id="projects"></div>
+            </section>
+
+            <section id="testimonials">
+                <h2>References</h2>
+                <h3>Average Rating</h3>
+                <ul id="reference-data"></ul>
+                <form>
+                    <label for="referenceName">Name</label>
+                    <input type="text" name="referenceName" />
+                    <label for="company">Company</label>
+                    <input type="text" name="company" />
+                    <label for="email">E-Mail</label>
+                    <input type="text" name="email" />
+                    <label for="comment">Comment</label>
+                    <input type="text" name="comment" />
+                    <label for="refID">Reference ID</label>
+                    <input type="text" name="refID" />
+                    <label for="rating">Rate Me</label>
+                    <select name="rating"></select>
+                    <button type="submit">Submit</button>
+                </form>
             </section>
 
             <section id="contact">

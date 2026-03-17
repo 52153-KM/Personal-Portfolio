@@ -69,14 +69,12 @@ class DatabaseObject {
     }
 }
 
-// might need a create function in Testimonial
-
 class Testimonial extends DatabaseObject {
-    constructor(refID, rating, comment) {
+    constructor(refID, rating, comment, name, company, email) {
         super();
         this.refID = refID;
         this.rating = rating;
-        this.comment = comment
+        this.comment = comment;
 
     }
 
@@ -91,16 +89,19 @@ class TestimonialDao {
             name: faker.person.fullName(),
             rating: faker.helpers.arrayElement([1, 2, 3, 4, 5]),
             comment: faker.lorem.sentences({ min: 2, max: 4 }),
+            refID: "seed1",
         },
         {
             name: faker.person.fullName(),
             rating: faker.helpers.arrayElement([1, 2, 3, 4, 5]),
             comment: faker.lorem.sentences({ min: 2, max: 4 }),
+            refID: "seed2",
         },
         {
             name: faker.person.fullName(),
             rating: faker.helpers.arrayElement([1, 2, 3, 4, 5]),
             comment: faker.lorem.sentences({ min: 2, max: 4 }),
+            refID: "seed3",
         },
     ];
 
@@ -108,11 +109,20 @@ class TestimonialDao {
         throw new Error("Not Implemented")
     }
 
-    getReferenceName(testimonial) {
+    //get reference data by name, used for updating existing data.
+    getReferenceName(name) {
         const testimonials = this.getAll();
-        return testimonials.find((test) => test.name == testimonial.name);
+        return testimonials.find((testimonial) => testimonial.name == name);
     }
-    create(testimonial) {
+
+    //checks if an entered id matches an existing id in database.
+    checkID(refID) {
+        const idValue = this.getAll();
+        const storedValue = idValue.find((idInList) => idInList.refID === refID);
+        return storedValue ? true : false;
+    }
+
+    static create(testimonial) {
         throw new Error("Not Implemented")
     }
 }
@@ -124,35 +134,46 @@ class SessionStorageTestimonialDao extends TestimonialDao {
     }
 
     getAll() {
-        const testAsJSON = this.database.getItem("testimonial");
+        const testAsJSON = this.database.getItem("testimonials");
         const testsData = testAsJSON ? JSON.parse(testAsJSON) : TestimonialDao.seeds;
-        return testsData.map((testData) => {
-            const { name, rating, comment } = testData;
-            return new Testimonial(name, rating, comment);
+        const idChecker = TestimonialDao.checkID(person.refID);
+        forEach(TestimonialDao.seeds, (testimonial) => {
+            if (idChecker == true) {
+                return testsData.map((testData) => {
+                    const { comment } = testData;
+                    return new Testimonial(comment += testData.comment);
+                });
+            }
+            else {
+                return testsData.map((testData) => {
+                    const { name, rating, comment, refID } = testData;
+                    return new Testimonial(name, rating, comment, refID);
+                });
+            }
         });
     }
 
     create(testimonial) {
-        const testimonials = this.getAll();
-        testimonials.push(testimonial);
-        this.database.setItem("testimonial", JSON.stringify(testimonials));
+        const seedTestimonials = this.getAll();
+        seedTestimonials.push(testimonial);
+        this.database.setItem("testimonials", JSON.stringify(seedTestimonials));
     }
 }
 
-/*class Reference extends DatabaseObject {
+class Reference extends DatabaseObject {
     constructor(params) {
         super();
         const { referenceName, company, email } = params;
-        this.name = referenceName;
+        this.referenceName = referenceName;
         this.company = company;
         this.email = email;
     }
 
     toString() {
-        return `${this.name} ${this.company} ${this.email} ${this.comment} ${this.rating}`;
+        return `${this.referenceName} ${this.company} ${this.email}`;
     }
 
-    update(params) {
+    static create(params) {
         return new Reference(params);
     }
 }
@@ -162,7 +183,7 @@ class ReferenceDao {
         throw new Error("Not Implemented");
     }
 
-    update(person) {        
+    create(reference) {
         throw new Error("Not Implemented");
     }
 }
@@ -174,40 +195,55 @@ class SessionStorageReferenceDao extends ReferenceDao {
     }
 
     getAll() {
-        const refAsJSON = this.database.getItem("reference");
-        const refsData = refAsJSON ? JSON.parse(refAsJSON) : [];
+        const referencesInSessionStorage = this.database.getItem("reference");
+        const refsData = referencesInSessionStorage ? JSON.parse(referencesInSessionStorage) : [];
         return refsData.map((refData) => {
-            const { name, company, email, refId } = refData;
-            return Reference({ referenceName: name, company, email, refId });
+            return Reference.create(refData);
         });
     }
 
-    idCheck(refID) {
-        const ID = this.getAll()
-        return ID.find((idInList) => idInList.refID == refID);
-    }
-
-    update(person) {
-        const savedRefs = this.getAll();
-        const index = this.idCheck(person.refID);
-        if (index == true) {
-            savedRefs[index] = person;
-            this.database.setItem("reference", JSON.stringify(savedRefs));
-        } else {
-            throw new Error("Reference ID not found");
-        }
+    create(reference) {
+        const references = this.getAll();
+        references.push(reference);
+        this.database.setItem("reference", JSON.stringify(references));
     }
 }
 
 class CreateReferenceData {
-    constructor(testDao) {
-        this.testDao = testDao;
+    constructor(testimonialDao, referenceDao) {
+        this.testimonialDao = testimonialDao;
+        this.referenceDao = referenceDao;
     }
 
-    createReference(referenceName, company, email, refID) {
-        const personNew = this.testDao.getReferenceData(referenceName);
-        const personOld = 
+    createReference(referenceName, company, email) {
+        const reference = this.testimonialDao.getReferenceName(referenceName);
+        const idChecker = this.testimonialDao.checkID(reference.refID);
+        if (idChecker == true) {
+            return null;
+        }
+        else {
+            const referenceData = {
+                reference,
+                company,
+                email,
+            };
+        }
+        this.testimonialDao.create(referenceData);
+        this.referenceDao.create(reference);
     }
 }
 
-const testDao = new SessionStorageTestimonialDao();*/
+const testimonialDao = new SessionStorageTestimonialDao();
+const referenceDao = new SessionStorageReferenceDao();
+const createReferenceData = new CreateReferenceData();
+
+const referenceList = document.getElementById("reference-data");
+const references = referenceDao.getAll();
+for (let i = 0; i < references.length; i++) {
+    const reference = references[i];
+    const referenceLi = document.createElement("li");
+    referenceLi.textContent = reference.toString();
+    referenceList.appendChild(referenceLi);
+}
+
+

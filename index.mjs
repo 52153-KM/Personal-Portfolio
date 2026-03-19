@@ -82,7 +82,7 @@ class Testimonial extends DatabaseObject {
     }
 
     toString() {
-        return `${this.referenceName} ${this.rating} ${this.comment}`;
+        return `${this.referenceName}, ${this.rating}/5: ${this.comment}`;
     }
 }
 
@@ -91,19 +91,19 @@ class TestimonialDao {
         {
             referenceName: faker.person.fullName(),
             rating: faker.helpers.arrayElement([1, 2, 3, 4, 5]),
-            comment: faker.lorem.lines({ min: 2, max: 4 }),
+            comment: faker.lorem.lines({ min: 1, max: 3 }),
             ID: "seed1",
         },
         {
             referenceName: faker.person.fullName(),
             rating: faker.helpers.arrayElement([1, 2, 3, 4, 5]),
-            comment: faker.lorem.lines({ min: 2, max: 4 }),
+            comment: faker.lorem.lines({ min: 1, max: 3 }),
             ID: "seed2",
         },
         {
             referenceName: faker.person.fullName(),
             rating: faker.helpers.arrayElement([1, 2, 3, 4, 5]),
-            comment: faker.lorem.lines({ min: 2, max: 4 }),
+            comment: faker.lorem.lines({ min: 1, max: 3 }),
             ID: "seed3",
         },
     ];
@@ -118,7 +118,7 @@ class TestimonialDao {
         return references.find((reference) => reference.ID == ID);
     }
 
-    static create(testimonial) {
+    static create(reference) {
         throw new Error("Not Implemented")
     }
 }
@@ -133,8 +133,11 @@ class SessionStorageTestimonialDao extends TestimonialDao {
         const testAsJSON = this.database.getItem("references");
         const testsData = testAsJSON ? JSON.parse(testAsJSON) : TestimonialDao.seeds;
         return testsData.map((testData) => {
+            //data is likely being overwritten here
             const { referenceName, rating, comment, ID } = testData;
-            return new Testimonial(referenceName, rating, comment, ID);
+            const company = "";
+            const email = "";
+            return new Testimonial(referenceName, company, email, ID, rating, comment);
         });
     }
 
@@ -146,19 +149,17 @@ class SessionStorageTestimonialDao extends TestimonialDao {
 }
 
 class CreateReferenceData {
-    constructor(testimonialDao) {
-        this.testimonialDao = testimonialDao;
+    testimonialDao;
+    constructor() {
+       this.testimonialDao = new SessionStorageTestimonialDao();
     }
 
     createReference(referenceName, company, email, comment, rating, ID) {
         const reference = this.testimonialDao.getReferenceByID(ID);
-        console.log("reference");
-        console.log(reference);
-
-        reference ? true : false;
+        const referenceID = reference ? true : false;
         let referenceData;
-        forEach (testimonialDao.seeds, (reference) => {
-            if (reference == true) {
+        forEach (testimonialDao, (referenceID) => {
+            if (referenceID == true) {
                 referenceData = reference.comment += comment;
                 reference.comment = referenceData;
                 return referenceData;

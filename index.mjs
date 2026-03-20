@@ -148,35 +148,43 @@ class SessionStorageTestimonialDao extends TestimonialDao {
     }
 }
 
+
+//sessionStorage works but returns null stating 'referenceDataComment is undefined'
 class CreateReferenceData {
     testimonialDao;
-    constructor() {
-       this.testimonialDao = new SessionStorageTestimonialDao();
+    constructor(comment) {
+        this.testimonialDao = new SessionStorageTestimonialDao();
+        this.comment = comment;
     }
 
     createReference(referenceName, company, email, comment, rating, ID) {
         const reference = this.testimonialDao.getReferenceByID(ID);
-        const referenceID = reference ? true : false;
+        const referenceExists = reference ? this.ID : ID;
         let referenceData;
-        forEach (testimonialDao, (referenceID) => {
-            if (referenceID == true) {
-                referenceData = reference.comment += comment;
-                reference.comment = referenceData;
-                return referenceData;
+        if (referenceExists === this.ID) {
+            referenceDataComment = comment += this.comment;
+            comment = referenceDataComment;
+            referenceData = {
+                referenceName,
+                company,
+                email,
+                ID,
+                rating,
+                comment,
             }
-            else {
-                referenceData = {
-                    referenceName,
-                    company,
-                    email,
-                    comment,
-                    rating,
-                    reference
-                };
-                return referenceData;
-            }
-        });
-        this.testimonialDao.create(referenceData);
+            this.testimonialDao.create(referenceData);
+        }
+        else {
+            referenceData = {
+                referenceName,
+                company,
+                email,
+                ID,
+                rating,
+                comment,
+            };
+            this.testimonialDao.create(referenceData);
+        }
     }
 }
 
@@ -202,6 +210,10 @@ for (let i = 0; i < refRatingSelect.length; i++) {
     option.innerText = rating.toString();
     ratingSelect.appendChild(option);
 }
+
+
+//need help implementing the Array Average section with .reduce method
+let ratingCount
 
 const createReferenceForm = document.querySelector("#testimonials form");
 createReferenceForm.addEventListener("submit", (event) => {

@@ -148,12 +148,36 @@ class SessionStorageTestimonialDao extends TestimonialDao {
     }
 }
 
+class CookieStorageTestimonialDao extends TestimonialDao {
+    constructor() {
+        super();
+        this.database = document.cookie;
+    }
 
-//sessionStorage works but returns null stating 'referenceDataComment is undefined'
+    getAll() {
+        const cookieValue = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith("references"))
+            ?.split("=")[1];
+        
+        const testsData = cookieValue ? JSON.parse(cookieValue) : TestimonialDao.seeds;
+        return testsData.map(
+            (testData) => new Testimonial(testData.referenceName, testData.company, testData.email, testData.ID, testData.rating, testData.comment),
+        );
+    }
+
+    create(reference) {
+        const currentTestimonials = this.getAll();
+        currentTestimonials.push(reference);
+        document.cookie = `references=${JSON.stringify(currentTestimonials)};`;
+    }
+}
+
 class CreateReferenceData {
     testimonialDao;
     constructor(comment) {
-        this.testimonialDao = new SessionStorageTestimonialDao();
+        //this.testimonialDao = new SessionStorageTestimonialDao();
+        this.testimonialDao = new CookieStorageTestimonialDao();
         this.comment = comment;
     }
 
@@ -162,8 +186,7 @@ class CreateReferenceData {
         const referenceExists = reference ? this.ID : ID;
         let referenceData;
         if (referenceExists === this.ID) {
-            referenceDataComment = comment += this.comment;
-            comment = referenceDataComment;
+            comment == this.comment;
             referenceData = {
                 referenceName,
                 company,
@@ -188,8 +211,31 @@ class CreateReferenceData {
     }
 }
 
-const testimonialDao = new SessionStorageTestimonialDao();
+class AverageRating {
+    testimonialDao
+    constructor(rating) {
+        //this.testimonialDao = new SessionStorageTestimonialDao();
+        this.testimonialDao = new CookieStorageTestimonialDao();
+        this.rating = rating;
+    }
+
+    getAverageRating() {
+        const reference = this.testimonialDao.getAll();
+        console.log("reference");
+        console.log(reference);
+        const refRating = [];
+        for (let i = 0; i < reference.length; i++) {
+            refRating.push(reference[i].rating);
+        }
+        const refRatingSum = refRating.reduce((accum, rating) => accum + rating, 0);
+        return refRatingSum;
+    }
+}
+
+//const testimonialDao = new SessionStorageTestimonialDao();
+const testimonialDao = new CookieStorageTestimonialDao();
 const createReferenceData = new CreateReferenceData();
+const averageRating = new AverageRating();
 
 const referenceList = document.getElementById("reference-data");
 const references = testimonialDao.getAll();
@@ -200,8 +246,7 @@ for (let i = 0; i < references.length; i++) {
     referenceList.appendChild(referenceLi);
 }
 
-const ratingSelect = document.querySelector("#testimonials form select")
-const aRating = document.querySelector("#testimonials h3")
+const ratingSelect = document.querySelector("#testimonials form select");
 
 const refRatingSelect = [1, 2, 3, 4, 5];
 for (let i = 0; i < refRatingSelect.length; i++) {
@@ -212,18 +257,20 @@ for (let i = 0; i < refRatingSelect.length; i++) {
 }
 
 
+
 //need help implementing the Array Average section with .reduce method
-let ratingCount
+const aRating = document.getElementById("averRating");
+const sumRating = averageRating.getAverageRating();
+aRating.textContent = `Average Rating: ${sumRating}.`;
 
 const createReferenceForm = document.querySelector("#testimonials form");
 createReferenceForm.addEventListener("submit", (event) => {
-    event.preventDefault();
     const formData = new FormData(event.target);
     const referenceName = formData.get("referenceName");
     const email = formData.get("email");
     const company = formData.get("company");
     const comment = formData.get("comment");
-    const rating = formData.get("rating");
+    const rating = parseInt(formData.get("rating"));
     const refID = formData.get("refID");
     createReferenceData.createReference(referenceName, email, company, comment, rating, refID);
 })

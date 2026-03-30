@@ -663,6 +663,11 @@ video {
   border-radius: 0.75rem;
 }
 
+.bg-\[\#2569ce\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 105 206 / var(--tw-bg-opacity, 1));
+}
+
 .bg-\[\#348e56\] {
   --tw-bg-opacity: 1;
   background-color: rgb(52 142 86 / var(--tw-bg-opacity, 1));
@@ -671,21 +676,6 @@ video {
 .bg-\[\#f8fa74\] {
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 116 / var(--tw-bg-opacity, 1));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#0000ee\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 238 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#2569ce\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(37 105 206 / var(--tw-bg-opacity, 1));
 }
 
 .object-cover {
@@ -725,12 +715,14 @@ video {
   line-height: 1.25rem;
 }
 
-.text-\[\#00000011\] {
-  color: #00000011;
+.text-\[\#000000\] {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
-.text-\[\#000000ff\] {
-  color: #000000ff;
+.text-\[\#f0f246\] {
+  --tw-text-opacity: 1;
+  color: rgb(240 242 70 / var(--tw-text-opacity, 1));
 }
 
 .text-slate-400 {
@@ -741,16 +733,6 @@ video {
 .text-slate-800 {
   --tw-text-opacity: 1;
   color: rgb(30 41 59 / var(--tw-text-opacity, 1));
-}
-
-.text-\[\#000000\] {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-.text-\[\#f0f246\] {
-  --tw-text-opacity: 1;
-  color: rgb(240 242 70 / var(--tw-text-opacity, 1));
 }
 
 .shadow {
@@ -764,11 +746,6 @@ video {
   background-color: rgb(240 242 70 / var(--tw-bg-opacity, 1));
 }
 
-.hover\:bg-slate-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(71 85 105 / var(--tw-bg-opacity, 1));
-}
-
 .hover\:text-\[\#000000\]:hover {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
@@ -777,11 +754,6 @@ video {
 .hover\:text-\[\#f0f246\]:hover {
   --tw-text-opacity: 1;
   color: rgb(240 242 70 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-slate-200:hover {
-  --tw-text-opacity: 1;
-  color: rgb(226 232 240 / var(--tw-text-opacity, 1));
 }
 
 .active\:text-slate-200:active {
